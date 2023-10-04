@@ -4,36 +4,21 @@ public class Liquid extends Item {
     private int thirstPoints;
     private int healthPoints; // healthPotion skal restore Health
 
-
-
     public Liquid(String name, String description, int thirstPoints, int healthPoints) {
         super(name, description);
         this.thirstPoints = thirstPoints;
         this.healthPoints = healthPoints;
     }
 
-    public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
-    }
 
-    public void setThirstPoints(int thirstPoints) {
-        this.thirstPoints = thirstPoints;
-    }
 
-    private class LiquidBuilder {
-        public ArrayList<Liquid> getLiquids() {
-            ArrayList<Liquid> liquids = new ArrayList<>();
 
-            Liquid li0 = new Liquid("healthPotion", "A potion that will restore you to full health and your thirst!", 100, 100);
-            Liquid li1 = new Liquid("", "", 100, 100);
 
-            liquids.add(li0);
 
-            return liquids;
 
-        }
 
-    }
+
+
 
 
 

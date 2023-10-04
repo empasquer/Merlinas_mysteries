@@ -1,7 +1,25 @@
 public class Food extends Item {
     private int healthPoints;
 
-    Food apple = new Food();
+    public Food(String name, String description, int healthPoints) {
+        super(name, description);
+        this.healthPoints = healthPoints;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*Food apple = new Food();
     Food chickenLeg = new Food();
     Food blueberryPie = new Food();
 
@@ -24,6 +42,6 @@ public class Food extends Item {
         blueberryPie.healthPoints = 40;
         blueberryPie.name = "Blueberry pie";
         blueberryPie.description = "Nothing better than a warm blueberry pie. Just like granma used to make it";
-    }
+    }*/
 }
 
