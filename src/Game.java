@@ -6,5 +6,6 @@ public class Game {
     private void run() {
         System.out.println("Hello");
         System.out.println("soething new here");
+        System.out.println("this is master again");
     }
 }
