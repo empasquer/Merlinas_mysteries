@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Game {
     public static void main(String[] args) {
         new Game().run();
@@ -9,6 +11,12 @@ public class Game {
 
         System.out.println(locations.get(0).getNorth().getName());
         System.out.println(locations.get(3).getNorth().getName());
+
+        ArrayList<Item> items = new ItemBuilder().getItems();
+
+        for (int i = 0; i< items.size(); i++) {
+            System.out.println(items.get(i).getName());
+        }
     }
 
     private class LocationBuilder {
@@ -88,11 +96,7 @@ public class Game {
 
             return locations;
         }
-        ArrayList<Item> items = new ItemBuilder().getItems();
 
-        for (int i = 0; i< items.size(); i++) {
-            System.out.println(items.get(i).getName());
-        }
 
     }
 
