@@ -11,6 +11,8 @@ public class Player {
 
 
 
+
+
     public Player(/*int health, int thirst, Location currentLocation, ArrayList<Item> inventory, Weapon equippedWeapon*/) {
         this.name = name;
         this.health = health;
