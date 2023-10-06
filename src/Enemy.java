@@ -44,6 +44,8 @@ public class Enemy {
     public Weapon getWeapon() {
         return weapon;
     }
+
+
 }
 
 

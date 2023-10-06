@@ -69,9 +69,10 @@ public class Player {
     }
 
     public void hit(int damage) {
-        int currentHealth = health - damage;
-
+        int currentHealth = getHealth() - damage;
         setHealth(currentHealth);
+        System.out.println("Merlina got hit, her health is now at " + getHealth());
+
         if (currentHealth <= 0) {
             System.out.println("You DIED"); // skal arbejdes videre med. måske skal der være en retry?
         }
@@ -151,6 +152,7 @@ public class Player {
         if (item instanceof Food) {
             health = health + ((Food) item).getHealthPoints();
             setHealth(health);
+            System.out.println("Merlinas health is now at " + getHealth());
         } else {
             System.out.println("this is not food");
         }
@@ -160,8 +162,10 @@ public class Player {
         if (item instanceof Liquid) {
             thirst = thirst + ((Liquid) item).getThirstPoints();
             setThirst(thirst);
+            System.out.println("Merlinas thirst is now at " + getThirst());
             health = health + ((Liquid) item).getHealthPoints();
             setHealth(health);
+            System.out.println("Merlinas health is now at " + getHealth());
         } else {
             System.out.println("this is not a liquid");
         }

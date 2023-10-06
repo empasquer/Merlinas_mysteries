@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Game {
@@ -10,7 +9,7 @@ public class Game {
     public ArrayList<Location> locations = new LocationBuilder().getLocations();
     public ArrayList<Item> items = new ItemBuilder().getItems();
     public ArrayList<Enemy> enemies = new EnemyBuilder().getEnemies();
-    public Player merlina = new Player("Merlina", 100, 100, locations.get(3), new ArrayList<Item>(), (Weapon)items.get(5));
+    public Player merlina = new Player("Merlina", 100, 100, locations.get(0), new ArrayList<Item>(), null);
     public boolean gameOver = false;
 
     public Scanner userInput = new Scanner(System.in);
@@ -294,6 +293,8 @@ public class Game {
             case "health" -> health();
             case "equip" -> equip(actionRecipient);
             case "attack" -> attack(actionRecipient);
+            case "eat" -> eat(actionRecipient);
+            case "drink" -> drink(actionRecipient);
 
         }
 
@@ -421,6 +422,7 @@ public class Game {
 
         if (enemyFound) {
             merlina.attack(attackedEnemy);
+            merlina.hit(attackedEnemy.getWeapon().getDamage());
         }
 
         if (!enemyFound) {
@@ -428,8 +430,53 @@ public class Game {
         }
     }
 
+    public void eat(String itemName) {
+        boolean itemFound = false;
 
+        // Iterate through the player's inventory
+        for (Item item : new ArrayList<>(merlina.getInventory())) {
+            if (itemName.equalsIgnoreCase(item.getName())) {
+                // Remove the item from the player's inventory
 
+                if (item instanceof Food) {
+                    merlina.eat((Food)item);
+                } else {
+                    System.out.println("this is not food and cannot be eaten.");
+                }
+
+                itemFound = true;
+
+            }
+        }
+
+        if (!itemFound) {
+            System.out.println("You can't eat a food you dont have in your inventory");
+        }
+    }
+
+    public void drink(String itemName) {
+        boolean itemFound = false;
+
+        // Iterate through the player's inventory
+        for (Item item : new ArrayList<>(merlina.getInventory())) {
+            if (itemName.equalsIgnoreCase(item.getName())) {
+                // Remove the item from the player's inventory
+
+                if (item instanceof Liquid) {
+                    merlina.drink((Liquid)item);
+                } else {
+                    System.out.println("this is not liquid and cannot be drunk.");
+                }
+
+                itemFound = true;
+
+            }
+        }
+
+        if (!itemFound) {
+            System.out.println("You can't drink a liquid you dont have in your inventory");
+        }
+    }
 
 
 }
