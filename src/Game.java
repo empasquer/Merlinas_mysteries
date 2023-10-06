@@ -13,10 +13,17 @@ public class Game {
         System.out.println(locations.get(3).getNorth().getName());
 
         ArrayList<Item> items = new ItemBuilder().getItems();
+        ArrayList<Enemy> enemies = new EnemyBuilder().getEnemies();
 
         for (int i = 0; i< items.size(); i++) {
             System.out.println(items.get(i).getName());
         }
+        for (int i = 0; i< enemies.size(); i++) {
+            System.out.println(enemies.get(i).getName());
+            System.out.println((enemies.get(i).getWeapon()).getName());
+        }
+
+
       /*  Player merlina = new Player();
         System.out.println(merlina.getName());
         merlina.hit(40);
@@ -153,15 +160,45 @@ public class Game {
             Weapon w0 = new Weapon("Elven Bow", "A masterfully crafted bow with arrows that seem to find their target with uncanny precision.", 85, true);
             Weapon w1 = new Weapon("Druid's Staff", " staff carved with intricate symbols, often wielded by those who commune with nature's magic.", 89, false);
             Weapon w2 = new Weapon("Battle Axe", "A simple yet brutal axe. Forged by dwarves.", 77, false);
+            Weapon w3 = new Weapon("Fangs", "A bears fangs", 34, false);
+            Weapon w4 = new Weapon("Knife", "A simple knife.", 12, false);
+            Weapon w5 = new Weapon("Boar Tusk", "Pointy tusks.", 20, false);
 
             weapons.add(w0);
             weapons.add(w1);
             weapons.add(w2);
+            weapons.add(w3);
+            weapons.add(w4);
+            weapons.add(w5);
 
             return weapons;
 
         }
 
     }
+
+    private class EnemyBuilder {
+        public ArrayList<Enemy> getEnemies() {
+            ArrayList<Enemy> enemies = new ArrayList<>();
+            ArrayList<Weapon> weapons = new ItemBuilder().getWeapons();
+
+
+            Enemy e0 = new Enemy("Bear", "An angry bear", 70, weapons.get(3));
+            Enemy e1 = new Enemy("Thief", "A thief looking for trouble!", 40, weapons.get(4));
+            Enemy e2 = new Enemy("Wild Boar", "An angry boar", 30, weapons.get(5));
+
+
+            enemies.add(e0);
+            enemies.add(e1);
+            enemies.add(e2);
+
+
+            return enemies;
+
+        }
+
+
+    }
+
 
 }
