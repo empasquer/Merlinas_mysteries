@@ -1,9 +1,19 @@
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class Game {
     public static void main(String[] args) {
         new Game().run();
     }
+
+    public ArrayList<Location> locations = new LocationBuilder().getLocations();
+    public ArrayList<Item> items = new ItemBuilder().getItems();
+    public ArrayList<Enemy> enemies = new EnemyBuilder().getEnemies();
+    public Player merlina = new Player("Merlina", 100, 100, locations.get(3), new ArrayList<Item>(), (Weapon)items.get(5));
+    public boolean gameOver = false;
+
+    public Scanner userInput = new Scanner(System.in);
 
     private void run() {
         // Create a list of locations
@@ -40,11 +50,12 @@ public class Game {
         System.out.println(locations.get(8).getItems().size());
 
 
-      /*  Player merlina = new Player();
-        System.out.println(merlina.getName());
-        merlina.hit(40);
-        System.out.println(merlina.getHealth());
-        merlina.health();*/
+        startGame();
+        while (!gameOver) {
+            play();
+        }
+
+
 
     }
 
@@ -77,10 +88,13 @@ public class Game {
             l8Items.add(items.get(1));
             l8Items.add(items.get(3));
 
+            ArrayList<Item> l0Items = new ArrayList<>();
+            l0Items.add(items.get(2));
+
 
             // Create your locations and set their attributes here -- repeat as needed
             // ex: Location lx = new Location("name", "desc", id);
-            Location l0 = new Location("Town Square", "The heart of the town where villagers gather./nIn the center of the town lies the bustling Town Square./nMerchants peddle their wares, children play games, and the townspeople go about their daily activities./nA majestic fountain graces the square's center, its waters glittering in the sunlight./nColorful banners hang from surrounding buildings, creating a festive atmosphere./nThis is the heartbeat of the town, where stories are shared, news is spread, and adventures begin.", 0);
+            Location l0 = new Location("Town Square", "The heart of the town where villagers gather./nIn the center of the town lies the bustling Town Square./nMerchants peddle their wares, children play games, and the townspeople go about their daily activities./nA majestic fountain graces the square's center, its waters glittering in the sunlight./nColorful banners hang from surrounding buildings, creating a festive atmosphere./nThis is the heartbeat of the town, where stories are shared, news is spread, and adventures begin.", 0, l0Items);
             Location l1 = new Location("Village Inn", "A cozy inn where travelers rest and share stories./nThe Village Inn welcomes weary travelers with a warm hearth and the aroma of hearty meals./nOak beams cradle the structure, and the low ceiling gives a sense of intimacy./nAdventurers sit at wooden tables, recounting their journeys and listening to tales from distant lands./nThe innkeeper, a jovial figure, serves ale and stew to patrons, while a bard strums a lute in the corner, filling the air with a melodic tune.", 1);
             Location l2 = new Location("Blacksmith's Forge", "The clang of metal fills the air as the blacksmith hammers away./nSparks fly as the blacksmith works tirelessly at the forge./nThe location is dominated by an anvil and various tools, their edges worn from years of use./nThe heat of the furnace radiates throughout the chamber./nThe blacksmith's hands move with precision, shaping metal into weapons, armor, and tools that will aid adventurers in their quests.", 2, l2Items);
             Location l3 = new Location("Market Street", "Stalls line the road, selling goods from near and far./nThe Market Street is a bustling thoroughfare, where traders and merchants from distant lands showcase their wares./nColorful awnings shade a variety of stalls, each offering unique items./nExotic spices, intricate textiles, and rare artifacts draw the attention of passersby./nThe air is filled with the mingling scents of spices, perfumes, and the tantalizing aroma of freshly baked bread.", 3, l3Enemies);
@@ -138,6 +152,7 @@ public class Game {
             l8.setWest(l6);
 
             // Add items and enemies to locations
+            l0.setItems(l0Items);
             l2.setItems(l2Items);
             l3.setEnemies(l3Enemies);
             l4.setEnemies(l4Enemies);
@@ -160,7 +175,6 @@ public class Game {
             return locations;
         }
     }
-
 
     private class ItemBuilder {
 
@@ -248,6 +262,174 @@ public class Game {
 
 
     }
+
+
+    public void startGame(){
+        System.out.println("The game starts");
+
+    }
+
+    public void play() {
+        System.out.println("Merlina can :");
+        System.out.println("take item, drop item, check inventory, examine item, get health stats, equip a weapon");
+        System.out.println();
+        System.out.println("What does Merlina do?");
+        String userMove = userInput.nextLine();
+
+        String action = "";
+        String actionRecipient = "";
+
+        if (userMove.contains(" ")) {
+             action = userMove.substring(0, userMove.indexOf(" ")).trim().toLowerCase();
+            actionRecipient = userMove.substring(userMove.indexOf(" ")).trim().toLowerCase();
+        } else {
+            action = userMove.trim().toLowerCase();
+        }
+
+        switch (action) {
+            case "take" -> take(actionRecipient, merlina.getCurrentLocation());
+            case "drop" -> drop(actionRecipient, merlina.getCurrentLocation());
+            case "inventory" -> checkInventory(merlina.getInventory());
+            case "examine" -> examine(actionRecipient, merlina.getInventory(), items);
+            case "health" -> health();
+            case "equip" -> equip(actionRecipient);
+            case "attack" -> attack(actionRecipient);
+
+        }
+
+
+    }
+
+    public void take(String itemName, Location currentLocation) {
+        boolean itemFound = false;
+
+        // Iterate through the current location's items
+        for (Item item : new ArrayList<>(currentLocation.getItems())) {
+            if (itemName.equalsIgnoreCase(item.getName())) {
+                // Add the item to the player's inventory
+                merlina.take(item);
+                // Remove the item from the current location's items
+                currentLocation.removeItem(item);
+                itemFound = true;
+
+            }
+        }
+
+        if (!itemFound) {
+            System.out.println("There is no such item here. Try again.");
+        }
+    }
+
+    public void drop(String itemName, Location currentLocation) {
+        boolean itemFound = false;
+
+        // Iterate through the player's inventory
+        for (Item item : new ArrayList<>(merlina.getInventory())) {
+            if (itemName.equalsIgnoreCase(item.getName())) {
+                // Remove the item from the player's inventory
+                merlina.drop(item);
+                // Add the item to the current location's items
+                currentLocation.addItems(item);
+                itemFound = true;
+
+            }
+        }
+
+        if (!itemFound) {
+            System.out.println("You don't have that item.");
+        }
+    }
+
+    public void checkInventory(ArrayList<Item> inventory) {
+        if (!inventory.isEmpty()){
+            System.out.println("Merlinas inventory contains:");
+            for (Item item : inventory) {
+                System.out.println(item.getName());
+            }
+        } else {
+            System.out.println("Merlinas inventory is empty");
+        }
+    }
+
+    public void examine(String itemName, ArrayList<Item> inventory, ArrayList<Item> items) {
+        if (!inventory.isEmpty() || !items.isEmpty()){
+            boolean itemFound = false;
+
+            // Iterate through the player's inventory
+            for (Item item : new ArrayList<>(inventory)) {
+                if (itemName.equalsIgnoreCase(item.getName())) {
+                    System.out.println(item.getDescription());
+                    itemFound = true;
+
+                }
+            }
+
+            for (Item item : new ArrayList<>(items)) {
+                if (itemName.equalsIgnoreCase(item.getName())) {
+                    System.out.println(item.getDescription());
+                    itemFound = true;
+
+                }
+            }
+
+            if (!itemFound) {
+                System.out.println("Nothing by that name to examine");
+            }
+
+        }
+    }
+
+    public void health(){
+        merlina.printHealthStats();
+    }
+
+    public void equip(String itemName) {
+        boolean itemFound = false;
+
+        // Iterate through the player's inventory
+        for (Item item : new ArrayList<>(merlina.getInventory())) {
+            if (itemName.equalsIgnoreCase(item.getName())) {
+                // Remove the item from the player's inventory
+
+                if (item instanceof Weapon) {
+                    merlina.setEquippedWeapon((Weapon)item);
+                } else {
+                    System.out.println("this is not a weapon and cannot be quipped.");
+                }
+
+                itemFound = true;
+
+            }
+        }
+
+        if (!itemFound) {
+            System.out.println("You can't equip an item you dont have in your inventory");
+        }
+    }
+
+    public void attack(String enemyName) {
+        boolean enemyFound = false;
+        Enemy attackedEnemy = null;
+
+        // Iterate through the player's inventory
+        for (Enemy enemy : merlina.getCurrentLocation().getEnemies()) {
+            if (enemyName.equalsIgnoreCase(enemy.getName())) {
+                attackedEnemy = enemy;
+                enemyFound = true;
+            }
+        }
+
+        if (enemyFound) {
+            merlina.attack(attackedEnemy);
+        }
+
+        if (!enemyFound) {
+            System.out.println("There are no enemies by this name here");
+        }
+    }
+
+
+
 
 
 }

@@ -13,7 +13,7 @@ public class Player {
 
 
 
-    public Player(/*int health, int thirst, Location currentLocation, ArrayList<Item> inventory, Weapon equippedWeapon*/) {
+    public Player(String name, int health, int thirst, Location currentLocation, ArrayList<Item> inventory, Weapon equippedWeapon) {
         this.name = name;
         this.health = health;
         this.thirst = thirst;
@@ -65,7 +65,7 @@ public class Player {
 
     public void printHealthStats() {
         System.out.printf("Your current health is %d%n",getHealth());
-        System.out.printf("Your current thirst is %d",getThirst());
+        System.out.printf("Your current thirst is %d%n",getThirst());
     }
 
     public void hit(int damage) {
@@ -78,29 +78,59 @@ public class Player {
 
     }
 
-/*    public void attack(Enemy enemy){
-        int damage = equippedWeapon.getDamage();
-        int enemyHealth = enemy.getHealth();
-        enemyHealth.setHealth(enemyHealth - damage);
-    }*/
+    public void attack(Enemy enemy){
+        if (equippedWeapon != null) {
+            int damage = equippedWeapon.getDamage();
+            int enemyHealth = enemy.getHealthPoints();
+            enemy.setHealthPoints(enemyHealth - damage);
+            System.out.println("Your enemy has received " + damage + " damage points and their health is at " + enemy.getHealthPoints() );
+        } else {
+            System.out.println("Merlina doesnt have any equipped weapon and can therefore not attack");
+        }
+
+        if (enemy.getHealthPoints() <= 0) {
+            currentLocation.removeEnemy(enemy);
+            currentLocation.addItems(enemy.getWeapon());
+            System.out.println(enemy.getName() + " has died");
+
+            System.out.println(currentLocation.getEnemies().size());
+            System.out.println(currentLocation.getItems().size());
+        }
+
+
+    }
+
+
 
     public void checkInventory(ArrayList<Item> inventory) {
-        for (Item item : inventory) {
 
-            System.out.println(item.getName());
+        if (!inventory.isEmpty()){
+            System.out.println("Merlinas inventory contains:");
+            for (Item item : inventory) {
+                System.out.println(item.getName());
+            }
+        } else {
+            System.out.println("Merlinas invenotry is empty");
         }
+
     }
 
 
     public void take(Item item) {
         if (inventory.size() < 7) {
             inventory.add(item);
+            System.out.println("You have taken " + item.getName());
+        } else {
+            System.out.println("You have maxed out your inventory. Drop something first.");
         }
     }
 
-    public void drop(Item item ){
+    public void drop(Item item) {
         if (!inventory.isEmpty()) {
             inventory.remove(item);
+            System.out.println("You have dropped " + item.getName());
+        } else {
+            System.out.println("Your inventory is empty. You have nothing to drop.");
         }
     }
 

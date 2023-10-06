@@ -41,12 +41,12 @@ public class Location {
         return id;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public ArrayList<Item> getItems() {
+        return (ArrayList)items;
     }
 
-    public List<Enemy> getEnemies() {
-        return enemies;
+    public ArrayList<Enemy> getEnemies() {
+        return (ArrayList)enemies;
     }
 
     public Location getNorth() {
@@ -95,5 +95,13 @@ public class Location {
 
     public void addEnemies(Enemy... newEnemies) {
         this.enemies.addAll(Arrays.asList(newEnemies));
+    }
+
+    public void removeItem(Item item) {
+        this.items.remove(item);
+    }
+
+    public void removeEnemy(Enemy enemy){
+        enemies.remove(enemy);
     }
 }
