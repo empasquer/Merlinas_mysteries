@@ -173,19 +173,19 @@ public class Player {
 
     public void goNorth(Location location) {
         setCurrentLocation(currentLocation.getNorth());
-        System.out.println("You are now at" + currentLocation.getName());
+        System.out.println("You are now at " + currentLocation.getName());
     }
     public void goSouth(Location location) {
         setCurrentLocation(currentLocation.getSouth());
-        System.out.println("You are now at" + currentLocation.getName());
+        System.out.println("You are now at " + currentLocation.getName());
     }
     public void goEast(Location location) {
         setCurrentLocation(currentLocation.getEast());
-        System.out.println("You are now at" + currentLocation.getName());
+        System.out.println("You are now at " + currentLocation.getName());
     }
     public void goWest(Location location) {
         setCurrentLocation(currentLocation.getWest());
-        System.out.println("You are now at" + currentLocation.getName());
+        System.out.println("You are now at " + currentLocation.getName());
     }
 
 }
