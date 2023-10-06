@@ -297,6 +297,7 @@ public class Game {
             case "drink" -> drink(actionRecipient);
             case "go" -> go(actionRecipient);
             case "location" -> getLocationDesc(merlina.getCurrentLocation());
+            case "quit" -> gameOver = true;
 
         }
 
@@ -425,6 +426,9 @@ public class Game {
         if (enemyFound) {
             merlina.attack(attackedEnemy);
             merlina.hit(attackedEnemy.getWeapon().getDamage());
+        }
+        if (merlina.getHealth() <= 0) {
+            gameOver = true;
         }
 
         if (!enemyFound) {

@@ -74,7 +74,7 @@ public class Player {
         System.out.println("Merlina got hit, her health is now at " + getHealth());
 
         if (currentHealth <= 0) {
-            System.out.println("You DIED"); // skal arbejdes videre med. måske skal der være en retry?
+            System.out.println("You DIED");
         }
 
     }
