@@ -10,19 +10,13 @@ public class Liquid extends Item {
         this.healthPoints = healthPoints;
     }
 
+    public int getHealthPoints() {
+        return healthPoints;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    public int getThirstPoints() {
+        return thirstPoints;
+    }
 
     // Liquid starlightElixir = new Liquid();
     //Liquid mysticElixir = new Liquid();

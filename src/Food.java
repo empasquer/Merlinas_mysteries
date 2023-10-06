@@ -6,20 +6,12 @@ public class Food extends Item {
         this.healthPoints = healthPoints;
     }
 
+    public int getHealthPoints() {
+        return healthPoints;
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    /*Food apple = new Food();
+/*Food apple = new Food();
     Food chickenLeg = new Food();
     Food blueberryPie = new Food();
 

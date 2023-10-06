@@ -17,6 +17,12 @@ public class Game {
         for (int i = 0; i< items.size(); i++) {
             System.out.println(items.get(i).getName());
         }
+      /*  Player merlina = new Player();
+        System.out.println(merlina.getName());
+        merlina.hit(40);
+        System.out.println(merlina.getHealth());
+        merlina.health();*/
+
     }
 
     private class LocationBuilder {
